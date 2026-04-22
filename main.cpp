@@ -19,8 +19,12 @@ int main(int argsc, char *argsv[]) {
 
     // Variable init
     float itime = 0.0f;
+
     int frameRate = 50;
     int frame = frameRate;
+    int brushSize = 1;
+    int maxBrushSize = 10;
+    
     bool pause = false;
 
     Pixel_ID placeID = Pixel_ID::sand;
@@ -81,6 +85,14 @@ int main(int argsc, char *argsv[]) {
                             Draw::TakeScreenShot(window, itime);
                             std::cout << "Snap taken at: " << itime << std::endl;
                             break;
+                        case SDLK_LEFTBRACKET:
+                            brushSize--;
+                            if (brushSize < 1) brushSize = 1;
+                            break;
+                        case SDLK_RIGHTBRACKET:
+                            brushSize++;
+                            if (brushSize > maxBrushSize) brushSize = 10;
+                            break;
                         case SDLK_0:
                             placeID = Pixel_ID::empty;
                             break;
@@ -100,7 +112,7 @@ int main(int argsc, char *argsv[]) {
                 case SDL_KEYUP:
                     break;
                 case SDL_MOUSEBUTTONDOWN:
-                    board.SetPixel(IntVector2(mouse) / board.pixelSize, placeID);
+                    board.SetPixelsInPattern(IntVector2(mouse) / board.pixelSize, placeID, brushSize);
                     break;
                 /* SDL_QUIT event (window close) */
                 case SDL_QUIT:
@@ -119,4 +131,4 @@ int main(int argsc, char *argsv[]) {
     SDL_Quit();
 
     return EXIT_SUCCESS;
-} // mingw32-make
+} // og, mingw32-make // now, make

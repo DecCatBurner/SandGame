@@ -83,6 +83,14 @@ class Board {
             pixels[set.x + set.y * size.x].id = id;
         }
 
+        void SetPixelsInPattern(IntVector2 center, Pixel_ID id, int size) {
+            for (int i = -size/2; i < size-size/2; i++) {
+                for (int j = -size/2; j < size-size/2; j++) {
+                    SetPixel(center + IntVector2(i, j), id);
+                }
+            }
+        }
+
         void Act() {
             for (int x = 0; x < size.x; x++) {
                 for (int y = 0; y < size.y; y++) {
